@@ -1,0 +1,57 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        ATM atm = new ATM();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bem-vindo ao Banco!");
+
+        // Autenticação do usuário
+        System.out.print("Digite seu nome de usuário: ");
+        String username = scanner.nextLine();
+        System.out.print("Digite sua senha: ");
+        String password = scanner.nextLine();
+
+        if (atm.authenticateUser(username, password)) {
+            System.out.println("Autenticação bem-sucedida.");
+            boolean running = true;
+
+            while (running) {
+                System.out.println("\nSelecione uma opção:");
+                System.out.println("1 - Ver saldo");
+                System.out.println("2 - Depositar");
+                System.out.println("3 - Sacar");
+                System.out.println("4 - Sair");
+
+                int choice = scanner.nextInt();
+                double amount;
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Seu saldo é: $" + atm.checkBalance(username));
+                        break;
+                    case 2:
+                        System.out.print("Digite o valor para depósito: $");
+                        amount = scanner.nextDouble();
+                        atm.deposit(username, amount);
+                        break;
+                    case 3:
+                        System.out.print("Digite o valor para saque: $");
+                        amount = scanner.nextDouble();
+                        atm.withdraw(username, amount);
+                        break;
+                    case 4:
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                }
+            }
+        } else {
+            System.out.println("Falha na autenticação. Encerrando.");
+        }
+
+        scanner.close();
+    }
+}
