@@ -1,0 +1,46 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class ATM {
+    private Map<String, User> users;
+
+    public ATM() {
+        this.users = new HashMap<>();
+        // Adicionando alguns usuários para teste
+        users.put("user1", new User("user1", "pass1", 1000));
+        users.put("user2", new User("user2", "pass2", 2000));
+    }
+
+    public boolean authenticateUser(String username, String password) {
+        if (users.containsKey(username)) {
+            User user = users.get(username);
+            return user.authenticate(password);
+        }
+        return false;
+    }
+
+    public double checkBalance(String username) {
+        if (users.containsKey(username)) {
+            User user = users.get(username);
+            return user.getBalance();
+        }
+        return -1; // Retorna um valor inválido para indicar que o usuário não existe
+    }
+
+    public boolean deposit(String username, double amount) {
+        if (users.containsKey(username)) {
+            User user = users.get(username);
+            user.deposit(amount);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean withdraw(String username, double amount) {
+        if (users.containsKey(username)) {
+            User user = users.get(username);
+            return user.withdraw(amount);
+        }
+        return false;
+    }
+}
